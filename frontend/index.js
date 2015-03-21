@@ -2,6 +2,8 @@ $(document).ready(function(){
     $("#toggle").click(function(){
         $("#hide").slideDown("slow");
         $("#search").val("");
+        $("#table").hide();
+        $("#search").focus();
     });
 });
 

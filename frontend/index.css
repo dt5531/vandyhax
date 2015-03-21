@@ -1,7 +1,6 @@
 .center{
 	text-align: center;
 	margin: 0 auto;
-	width: 80%;
 }
 .topMargin{
 	margin-top: 2rem;
@@ -11,7 +10,14 @@
 }
 span:div{
 	display: inline;
+	font-size:16px;
+	color:#FFF;
+      transition: all 0.3s ease-in;
+      text-decoration:none;
 }
 span:hover, span:active {
-  box-shadow: inset 0 0 10px #(color of the glow you want);
+  -webkit-stroke-width: 5.3px;
+      -webkit-stroke-color: #FFFFFF;
+      -webkit-fill-color: #FFFFFF;
+      text-shadow: 1px 0px 20px blue;
 }
