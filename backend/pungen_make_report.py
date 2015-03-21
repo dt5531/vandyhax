@@ -11,7 +11,7 @@ def queryReddit():
 	
 	# HTML query
 	o = urllib2.build_opener()
-	html = o.open("http://www.reddit.com/r/jokes/top.json?sort=top&t=all&limit=5&count=0").read()
+	html = o.open("http://www.reddit.com/r/jokes/top.json?sort=top&t=all&limit=100&count=0").read()
 	js = json.loads(html)["data"]["children"]
 
 	# Process HTML response
@@ -40,6 +40,7 @@ def preprocEnglish():
     return preproc(text9)
 
 def preprocReddit():
+    print queryReddit()
     return preproc(queryReddit())
 
 # Compute dependent probability [p(reddit)/p(english)]
