@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Your page title here :)</title>
+  <title>Dank Domainz</title>
   <meta name="description" content="">
   <meta name="author" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="Skeleton-2.0.4/css/normalize.css">
   <link rel="stylesheet" href="Skeleton-2.0.4/css/skeleton.css">
@@ -21,17 +21,23 @@
                 <h4 class="topMargin">Dank Domainz</h4>
                 <p>Welcome to Dank Domainz! We're here to help you find the dankest domain name for your page needz.</p>
                 <h5> Suggested searches:</h5>
-                <p>you, go, glen, coco, vandyhackz</p>
+                <span class="clickable"`>you</span>
+                <span class="clickable">go</span>
+                <span class="clickable">glen</span>
+                <span class="clickable">coco</span>
+                <span class="clickable">vandyhackz</span>
             </div>
             <button id="toggle" class="button-primary">Let me try!</button>
             <div id="hide" class="hidden">
-                <form>
+                <form onsubmit="return false">
                     <div class="row center">
                         <div class="column">
                         <label for="Search">Search</label>
-                        <input class="u-full-width" type="email" placeholder="ex. funny blonde jokes" id="exampleEmailInput">
+                        <input id="search" class="u-full-width" type="search" placeholder="ex. funny blonde jokes">
                     </div>
                 </form>
+            </div>
+            <div id="table" class="hidden">
                 <table class="u-full-width center">
                     <thead>
                         <tr>

@@ -9,3 +9,9 @@
 .hidden{
 	display: none;
 }
+span:div{
+	display: inline;
+}
+span:hover, span:active {
+  box-shadow: inset 0 0 10px #(color of the glow you want);
+}
