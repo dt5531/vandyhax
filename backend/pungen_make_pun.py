@@ -7,6 +7,7 @@ badwords = ["bong", "dope", "spliff", "dank", "blow", "fuck", "shit", "dick", "p
 import urllib2, json, nltk, pickle
 from bs4 import BeautifulSoup as bs
 from nltk.corpus import cmudict
+import os
 
 # Rhyme ranking
 cmudict = cmudict.dict()
@@ -14,7 +15,7 @@ cmudict = cmudict.dict()
 # Forward/backward rhyming
 def forwardRhyme(a,b):
 	da = cmudict.get(a,[["A"]])[0]
-	db = cmudict.get(b,[["B"]])[0]	
+	db = cmudict.get(b,[["B"]])[0]
 	m = min(len(da), len(db))
 
 	rank = 0.0
@@ -38,7 +39,7 @@ def backwardRhyme(a,b):
 
 # Query punGenerator
 def generatePuns(word):
-	
+
 	# HTML query
 	o = urllib2.build_opener()
 	o.addheaders = [("User-agent", "Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11")]
@@ -72,7 +73,7 @@ def rankPuns(puns, wordRanks, allowProfanity):
 				if (" " + bad) in pl or (bad + " ") in pl:
 					punOk = False
 		if not punOk:
-			continue	
+			continue
 
 		# Variables
 		rank1 = 1.0
@@ -108,7 +109,7 @@ if __name__ == "__main__":
 
 		# Get precursors
 		puns = generatePuns(sys.argv[1])
-		wordRanks = pickle.load(open("./combined.pcl", "r+"))
+		wordRanks = pickle.load(open(os.path.dirname(os.path.realpath(__file__))+"/combined.pcl", "r+"))
 
 		# Rank puns
 		data = rankPuns(puns, wordRanks, allowProfanity)
