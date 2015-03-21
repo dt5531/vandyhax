@@ -2,7 +2,7 @@
 This file fetches puns from pungenerator.org and ranks them.
 """
 
-badwords = ["bong", "dope", "spliff", "dank", "blow", "fuck", "shit", "dick", "piss", "ass", "cunt", "breast", "blow", "dank", "tit", "nipple", "penis", "vagina", "blumpkin", "creampie"]
+badwords = ["bong", "dope", "spliff", "dank", "blow", "fuck", "shit", "dick", "piss", "ass", "cunt", "breast", "blow", "dank", "tit", "nipple", "penis", "vagina", "blumpkin", "creampie", "nigga", "nigger", "porn", "chink", "anal", "arse", "arsehole", "asshole", "byatch", "cock", "dickhead", "fag", "faggot", "fagot", "gay", "homo", "homosexual", "jizz", "masterbate", "motherfucker", "prick", "pussy", "racist", "skank", "slut", "suck", "transexual", "xxx", "whore"]
 
 import urllib2, json, nltk, pickle
 from bs4 import BeautifulSoup as bs
