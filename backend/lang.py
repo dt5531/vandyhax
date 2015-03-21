@@ -1,19 +1,13 @@
-import string
-import sys
-import os
-import re
-import gc
-from nltk.tokenize import RegexpTokenizer as RT
 from nltk.probability import FreqDist as FD
+from nltk.book import text9
 
-class lang(object):
-    def __init__(self, **kwargs):
-        self.tok = RT(r'\w+')
-        self.freq = FD()
+freq = FD(text9)
+freq_lower = dict()
+total = 0
 
+for tup in freq:
+    freq_lower[tup.lower()] = freq_lower.get(tup.lower(), 0 ) + freq[tup];
+    total += freq[tup]
 
-    def FreqD(self):
-        return self.freq
-
-    def procTxt(self, text):
-        tokens = self.tok.tokenize(text)
+def retWord(arg):
+    return freq_lower.get(arg, 0) / total
