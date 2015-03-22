@@ -18,7 +18,7 @@ def match_phrase(phrase)
   matches = TLDS.map {|tld|
     [(phrase.sub(/#{tld}$/, ".#{tld}") if phrase.match(/#{tld}$/)),
      (phrase.sub(/(.*)#{tld}(.*)/, "\\1.#{tld}/\\2") if phrase.match(/(.*)#{tld}(.*)/))]
-  }.flatten.reject(&:nil?)
+  }.flatten.reject(&:nil?).reject {|p| p[-1].eql? "/"}
   matches.concat(REQUIRED.map {|t| "#{phrase}.#{t}"}).uniq
 end
 
