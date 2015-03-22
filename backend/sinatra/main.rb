@@ -33,7 +33,7 @@ end
 
 get '/domains/:dom' do |dom|
   dom.gsub!(/\W/, '')
-  domains = match_phrase(dom)
+  domains = find_unused(dom)
   json :result => domains
 end
 
