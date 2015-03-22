@@ -30,16 +30,33 @@
 .hidden{
 	display: none;
 }
-span:div{
+
+span:div {
 	display: inline;
 	font-size:16px;
 	color:#FFF;
       transition: all 0.3s ease-in;
       text-decoration:none;
 }
-.suggestion:hover, .suggestion:active {
-  -webkit-stroke-width: 5.3px;
-      -webkit-stroke-color: #FFFFFF;
-      -webkit-fill-color: #FFFFFF;
-      text-shadow: 1px 0px 20px blue;
+.suggestion:hover {
+    background-color: #BBBBBB;
+}
+
+.suggestion {
+    border-radius: 3px;
+    padding: 1px 3px 1px 3px;
+    background-color: #CCCCCC;
+    color: #FFFFFF;
+}
+
+h5 {
+    margin-bottom: 4px;
+}
+
+.pun {
+  border: 0 solid #CCCCCC;
+  border-bottom-width: 1px;
+  margin-bottom: 0px;
+  padding: 5px;
+  font-size: 18px;
 }
