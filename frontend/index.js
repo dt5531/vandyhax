@@ -1,40 +1,38 @@
 $(document).ready(function(){
     $("#toggle").click(function(){
-    	$("#search").val("");
-    	$("#toggle").hide();
-    	$("#table").hide();
-        $("#hide").slideDown("slow");
-        $("#search").focus();
+    	$("#toggle").fadeOut("slow", function(){
+	        $("#input").fadeIn("slow");
+	        $("#search").val("").focus();
+	    });
     });
 });
 
+// Manual puns
+$(document).ready(function(){
+	$("#input").on("keyup keypress keydown click", function(){
+    	$("#table").show();
+    });
+});
+
+// Suggested puns
 $(document).ready(function(){
 	$(".suggestion").click(function(){//click on the suggested search
-		$("#hide").slideDown("slow");//show the search box
-		$("#toggle").slideUp("slow");
-		$("#search").val($(this).text());//set the text in the search box
-		$("#table").slideDown("slow");
-		if( ($("#search").val()).length >= 3 ){
-    		$("#table").show();
-    	}
-    	else{
-    		$("#search").show();
-    		$("#table").hide();
-    	}
+		
+		// UI
+		var sText = $(this).text();
+		$("#toggle").fadeOut("slow", function(){
+	        $("#input").fadeIn("slow");
+	        console.log(sText);
+	        $("#search").val(sText);
+	    });
+		$("#table").show().slideDown("slow");
+
+		// Pun queries
+		getPuns(sText, true)
 	});
 });
-$(document).ready(function(){
-	$("#hide").on("keyup keypress keydown click", function(){
-    	if( ($("#search").val()).length >= 3 ){
-    		$("#table").show();
-    	}
-    	else{
-    		$("#search").show();
-    		$("#table").hide();
-    	}
-    });
-});
 
+// Background images
 $(document).ready(function(){
 	var sw = $(window).innerWidth();
     var sh = $(window).innerHeight();
@@ -56,7 +54,43 @@ $(document).ready(function(){
 	    	"width": tempStr,
 	    	"height": tempStr,
 	    	"filter": newBlurStr,
-	    	"-webkit-filter": newBlurStr,
+	    	"-webkit-filter": newBlurStr
 	    });
 	});
 });
+
+// AJAX queries
+var getPuns = function(word, unsafe) {
+
+	// Hide old puns
+	$("#results").empty();
+
+	// Do request
+	var req = new XMLHttpRequest();
+	req.open("GET", "http://localhost:4567/puns/" + word + "/unsafe", true);
+	req.onload = function() {
+		var puns = JSON.parse(req.response)["result"];
+
+		// Append puns to results list
+		for (var i = 0; i < puns.length; i++) {
+			$("#results").append("<p class='pun'>" + puns[i] + "</p>");
+		}
+
+		// Construct expandos
+		$(".pun").each(function() {
+			$(this).append("<div class='pun-expando'>" +  + "</div>");
+		});
+		$(".pun").on("click", function() {
+			$(this).height
+		});
+	};
+	req.send(null);
+}
+
+var getDomains = function(phrase) {
+
+}
+
+var getAvailable = function(domain) {
+
+}
