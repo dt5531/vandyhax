@@ -49,10 +49,6 @@ span:div {
     color: #FFFFFF;
 }
 
-h5 {
-    margin-bottom: 4px;
-}
-
 .pun {
   border: 0 solid #CCCCCC;
   border-bottom-width: 1px;
@@ -79,4 +75,8 @@ h5 {
 .pun-error,
 .pun-busy {
   color: red;
+}
+
+h4, h5, p {
+  margin-bottom: 5px;
 }

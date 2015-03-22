@@ -28,7 +28,8 @@ $(document).ready(function(){
 		$("#table").show().slideDown("slow");
 
 		// Pun queries
-		getPuns(sText, true)
+		var unsafe = $("#profanity").prop("checked");
+		getPuns(sText, unsafe)
 	});
 });
 
@@ -130,7 +131,8 @@ $(document).ready(function(){
 	$("#search").on("keydown", function(){
 		clearTimeout(typeaheadTimer);
 		typeaheadTimer = setTimeout(function(){
-			getPuns($("#search").val(), false);
+			var unsafe = $("#profanity").prop("checked")
+			getPuns($("#search").val(), unsafe);
 		}, 400);
 	});
 });
