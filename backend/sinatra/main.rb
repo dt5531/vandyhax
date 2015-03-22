@@ -16,6 +16,11 @@ def get_pun(phrase, unfiltered=false)
   puns
 end
 
+options '/*' do
+  response["Access-Control-Allow-Headers"] = "origin, x-requested-with, content-type"
+  response["Access-Control-Allow-Origin"] = "*"
+end
+
 get '/whois/:name' do |name|
   res = valid_domain(name) and "Found" or "Not found"
   json :result => res
