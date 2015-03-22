@@ -5,7 +5,7 @@ require_relative './memo.rb'
 
 def get_pun(phrase, unfiltered=false)
   puns = keyword_get phrase, unfiltered
-  unless pun
+  unless puns
     if unfiltered
       puns = pungen phrase, "1"
     else
