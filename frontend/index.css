@@ -5,7 +5,7 @@
 .topMargin{
 	margin-top: 2rem;
 }
-.background {
+.back-img {
     background-image: url("weed.svg");
     width: 200px;
     height: 200px;
@@ -37,7 +37,7 @@ span:div{
       transition: all 0.3s ease-in;
       text-decoration:none;
 }
-span:hover, span:active {
+.suggestion:hover, .suggestion:active {
   -webkit-stroke-width: 5.3px;
       -webkit-stroke-color: #FFFFFF;
       -webkit-fill-color: #FFFFFF;

@@ -1,82 +1,130 @@
-(function() {
-
-  var base_url = "http://dankna.me";
-
-  var safe_pun_url = base_url + "/puns/{1}";
-  var unsafe_pun_url = base_url + "/puns/{1}/unsafe";
-  var pun_url = safe_pun_url;
-
-  var domain_url = base_url + "/domains/{1}";
-
-  $(document).ready(function(){
+$(document).ready(function(){
     $("#toggle").click(function(){
-      $("#search").val("");
-      $("#toggle").hide();
-      $("#table").hide();
-      $("#hide").slideDown("slow");
-      $("#search").focus();
+    	$("#toggle").fadeOut("slow", function(){
+	        $("#input").fadeIn("slow");
+	        $("#search").val("").focus();
+	    });
     });
-  });
+});
 
-  $(document).ready(function(){
-    $(".clickable").click(function(){//click on the suggested search
-      $("#hide").slideDown("slow");//show the search box
-      $("#toggle").slideUp("slow");
-      $("#search").val($(this).text());//set the text in the search box
-      $("#table").slideDown("slow");
-      if( ($("#search").val()).length >= 3 ){
-        $("#table").show();
-      }
-      else{
-        $("#search").show();
-        $("#table").hide();
-      }
+// Manual puns
+$(document).ready(function(){
+	$("#input").on("keyup keypress keydown click", function(){
+    	$("#table").show();
     });
-  });
+});
 
-  $(document).ready(function(){
-    $("#hide").on("keyup keypress keydown click", function(){
-      $search = $("#search");
-      if( ($search.val()).length >= 3 ){
-        var search_text = $search.val();
-        var query_url = pun_url.replace("{1}", search_text);
+// Suggested puns
+$(document).ready(function(){
+	$(".suggestion").click(function(){//click on the suggested search
+		
+		// UI
+		var sText = $(this).text();
+		$("#toggle").fadeOut("slow", function(){
+	        $("#input").fadeIn("slow");
+	        console.log(sText);
+	        $("#search").val(sText);
+	    });
+		$("#table").show().slideDown("slow");
 
-        // query data
-        $.get(query_url, function(data) {
-          var puns = data['result'];
-          console.log(puns);
-        }, "json");
+		// Pun queries
+		getPuns(sText, true)
+	});
+});
 
-        $("#table").show();
-      }
-      else{
-        $("#search").show();
-        $("#table").hide();
-      }
-    });
-  });
+// Background images
+$(document).ready(function(){
+	var sw = $(window).innerWidth();
+    var sh = $(window).innerHeight();
+    var r = function() { return Math.random(); }
+	$(".background").each(function(){
+		var tempSize = r()*2.5;
+		var pt = (r()*h*0.7).toString() + "px";
+	    var pr = (r()*w*0.7).toString() + "px";
 
-  $(document).ready(function(){
-    var w = $(window).innerWidth();
-    var h = $(window).innerHeight();
-    $(".background").each(function(){
-      var tempSize = Math.random()*2.5;
-      var t = Math.random() * h*0.70;
-      var r = Math.random() * w*0.70;
-      var newBlur = w/50*tempSize;
-      var newBlurStr = newBlur.toString() + "px";
-      $(this).rotate(Math.random()*360);
-      $(this).css({
-        "top": t.toString()+"px",
-        "right": r.toString()+"px",
-        "position": "fixed",
-        "width": (w/8*tempSize).toString()+"px",
-        "height": (w/8*tempSize).toString()+"px",
-        "background-size": "100%, 100%",
-        "filter": "blur(" + newBlurStr + ")",
-        "-webkit-filter": "blur(" + newBlurStr + ")",
-      });
-    });
-  });
+	    console.log(pt + " / " + pr)
 
-})();
+	    var newBlurStr = "blur(" + (sw/50*tempSize).toString() + "px)";
+	    var tempStr = (sw/8*tempSize).toString()+"px";
+
+		$(this).rotate(r()*360);
+	    $(this).css({
+	    	"top": pt,
+	    	"right": pr,
+	    	"width": tempStr,
+	    	"height": tempStr,
+	    	"filter": newBlurStr,
+	    	"-webkit-filter": newBlurStr
+	    });
+	});
+});
+
+// AJAX queries
+var getPuns = function(word, unsafe) {
+
+	// Hide old puns
+	$("#results").empty();
+
+	// Do request
+	var req = new XMLHttpRequest();
+	req.open("GET", "http://localhost:4567/puns/" + word + (unsafe ? "/unsafe" : ""), true);
+	req.onload = function() {
+		var puns = JSON.parse(req.response)["result"];
+
+		// Append puns to results list
+		for (var i = 0; i < puns.length; i++) {
+			$("#results").append("<p class='pun'>" + puns[i] + "</p>");
+		}
+
+		// Construct expandos
+		$(".pun").on("click", function() {
+
+			// UI
+			$(".pun").not(this).removeClass("expanded");
+			$(".pun-domain").remove();
+			$(this).toggleClass("expanded");
+
+			// Domain request
+			if ($(this).hasClass("expanded"))
+				getDomains($(this).text());
+		});
+	};
+	req.send(null);
+}
+
+var getDomains = function(phrase) {
+
+	// Clean up phrase
+	phrase = phrase.toLowerCase().replace(/\W+/g, "");
+
+	// Do request
+	var req = new XMLHttpRequest();
+	req.open("GET", "http://localhost:4567/domains/" + phrase, true);
+	req.onload = function() {
+
+		// Check for available domains
+		var domains = JSON.parse(req.response)["result"];
+		console.log(domains)
+		for (var i = 0; i < domains.length; i++) {
+			getAvailable(domains[i], $(".pun.expanded"));
+		}
+	};
+	req.send(null);
+}
+
+// Check whether a domain is available
+var getAvailable = function(domain, root) {
+
+	// Do request
+	var req = new XMLHttpRequest();
+	req.open("GET", "http://localhost:4567/whois/" + domain, true);
+	req.onload = function() {
+
+		// Check for available domains
+		var res = req.response;
+		console.log(res)
+	};
+	req.send(null);
+
+	//root.append("<p class='pun-domain'>" + domains[i] + "</p>");
+}
