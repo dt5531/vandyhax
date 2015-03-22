@@ -64,3 +64,9 @@ h5 {
 .pun.expanded {
   min-height: 50px;
 }
+
+.pun-domain {
+  color: #33C3F0;
+  font-size: 15px;
+  margin-bottom: 0px;
+}
