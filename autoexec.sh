@@ -12,3 +12,6 @@ Bundler.with_clean_env do
 end
 EOF
 
+text -d "$DIR/backend/sinatra/tmp" || mkdir "$DIR/backend/sinatra/tmp"
+touch "$DIR/backend/sinatra/tmp/restart.txt"
+
