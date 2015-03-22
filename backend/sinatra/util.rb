@@ -28,7 +28,7 @@ end
 
 def pungen(phrase, profane="")
   pungenbin = File.expand_path('../../pungen_make_pun.py', __FILE__)
-  phrases = %x[/usr/bin/env python #{pungenbin} "#{Shellwords.escape(phrase)}" #{profane}].split(/\n/).map {|s|
+  phrases = %x[/usr/bin/env python #{pungenbin} #{Shellwords.escape(phrase)} #{profane}].split(/\n/).map {|s|
     s.strip.gsub(/^\[[^\]]*\]\s*/, '')
   }
   if profane != ""
