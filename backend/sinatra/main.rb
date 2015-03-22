@@ -17,7 +17,7 @@ def get_pun(phrase, unfiltered=false)
 end
 
 options '/*' do
-  response["Access-Control-Allow-Headers"] = "origin, x-requested-with, content-type"
+  #response["Access-Control-Allow-Headers"] = "origin, x-requested-with, content-type"
   response["Access-Control-Allow-Origin"] = "*"
 end
 
