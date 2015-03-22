@@ -5,6 +5,28 @@
 .topMargin{
 	margin-top: 2rem;
 }
+.background {
+    background-image: url("weed.svg");
+    width: 200px;
+    height: 200px;
+    background-size: 120px 120px;
+    background-repeat: no-repeat;
+    z-index: -99999;
+    top: -99999px;
+    filter: blur(20px);
+    -webkit-filter: blur(20px);
+    /*image-rendering: optimizeSpeed;   */          /* FUCK SMOOTHING, GIVE ME SPEED  */
+    image-rendering: -moz-crisp-edges;          /* Firefox                        */
+    image-rendering: -o-crisp-edges;            /* Opera                          */
+    image-rendering: -webkit-optimize-contrast; /* Chrome (and eventually Safari) */
+    image-rendering: optimize-contrast;         /* CSS3 Proposed                  */
+    -ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */
+    /*-webkit-transform: rotate(30deg);
+    -moz-transform: rotate(30deg);
+    -ms-transform: rotate(30deg);
+    -o-transform: rotate(30deg);
+    transform: rotate(30deg);*/
+}
 .hidden{
 	display: none;
 }
