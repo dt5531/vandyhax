@@ -2,9 +2,12 @@
 This file fetches puns from pungenerator.org and ranks them.
 """
 
+badwords = ["bong", "dope", "spliff", "dank", "blow", "fuck", "shit", "dick", "piss", "ass", "cunt", "breast", "blow", "dank", "tit", "nipple", "penis", "vagina", "blumpkin", "creampie", "nigga", "nigger", "porn", "chink", "anal", "arse", "arsehole", "asshole", "byatch", "cock", "dickhead", "fag", "faggot", "fagot", "gay", "homo", "homosexual", "jizz", "masterbate", "motherfucker", "prick", "pussy", "racist", "skank", "slut", "suck", "transexual", "xxx", "whore"]
+
 import urllib2, json, nltk, pickle
 from bs4 import BeautifulSoup as bs
 from nltk.corpus import cmudict
+import os
 
 # Rhyme ranking
 cmudict = cmudict.dict()
@@ -12,7 +15,7 @@ cmudict = cmudict.dict()
 # Forward/backward rhyming
 def forwardRhyme(a,b):
 	da = cmudict.get(a,[["A"]])[0]
-	db = cmudict.get(b,[["B"]])[0]	
+	db = cmudict.get(b,[["B"]])[0]
 	m = min(len(da), len(db))
 
 	rank = 0.0
@@ -36,7 +39,7 @@ def backwardRhyme(a,b):
 
 # Query punGenerator
 def generatePuns(word):
-	
+
 	# HTML query
 	o = urllib2.build_opener()
 	o.addheaders = [("User-agent", "Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11")]
@@ -55,12 +58,24 @@ def generatePuns(word):
         return puns
 
 # Rank puns
-def rankPuns(puns, wordRanks):
+def rankPuns(puns, wordRanks, allowProfanity):
 
 	# Rank puns
 	maxR = float(max(w for w in wordRanks.values()))
 	punRanks = dict()
 	for p in puns:
+
+		# Profanity filter
+		punOk = True
+		if not allowProfanity:
+			pl = p.lower()
+			for bad in badwords:
+				if (" " + bad) in pl or (bad + " ") in pl:
+					punOk = False
+		if not punOk:
+			continue
+
+		# Variables
 		rank1 = 1.0
 		rank2 = 1.0
 
@@ -72,10 +87,8 @@ def rankPuns(puns, wordRanks):
 		# Rank by rhymes
 		for i in range(1,len(words)-1):
 			rank2 += forwardRhyme(words[i], words[i+1]) + backwardRhyme(words[i-1], words[i])
-		if rank2 != 0.0:
-			print "RANK2 " + str(rank2) + " [" + p + "]"
 
-		# Record
+		# Record (if not profane)
 		rank = float(rank1 + rank2/10.0)
 		punRanks[p] = rank
 
@@ -87,17 +100,21 @@ import sys
 if __name__ == "__main__":
 
 	# Check
-	if len(sys.argv) == 2:
+	if len(sys.argv) in (2,3):
+
+		# Determine profanity
+		allowProfanity = (len(sys.argv) == 3)
+		if allowProfanity:
+			print "\033[91m\033[1mWARNING: Profanity filter is OFF!\033[0m"
 
 		# Get precursors
 		puns = generatePuns(sys.argv[1])
-		wordRanks = pickle.load(open("./combined.pcl", "r+"))
-		print wordRanks
+		wordRanks = pickle.load(open(os.path.dirname(os.path.realpath(__file__))+"/combined.pcl", "r+"))
 
 		# Rank puns
-		data = rankPuns(puns, wordRanks)
-		for i in range(25):
-			pun = data[1].keys()[i]
+		data = rankPuns(puns, wordRanks, allowProfanity)
+		for i in range(0,min(25,len(data[0]))):
+			pun = data[0][i]
 			print "[" + str(data[1][pun]) + "] " + pun
 
 	else:
