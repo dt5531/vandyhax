@@ -78,10 +78,11 @@ var getPuns = function(word, unsafe) {
 
 		// Construct expandos
 		$(".pun").each(function() {
-			$(this).append("<div class='pun-expando'>" +  + "</div>");
+			$(this).append("<div class='pun-expando'></div>");
 		});
 		$(".pun").on("click", function() {
-			$(this).height
+			$(".pun").removeClass("expanded");
+			$(this).toggleClass("expanded");
 		});
 	};
 	req.send(null);

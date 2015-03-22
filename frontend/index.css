@@ -60,3 +60,7 @@ h5 {
   padding: 5px;
   font-size: 18px;
 }
+
+.pun.expanded {
+  min-height: 50px;
+}
