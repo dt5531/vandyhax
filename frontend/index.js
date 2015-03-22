@@ -9,7 +9,7 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-	$(".clickable").click(function(){//click on the suggested search
+	$(".suggestion").click(function(){//click on the suggested search
 		$("#hide").slideDown("slow");//show the search box
 		$("#toggle").slideUp("slow");
 		$("#search").val($(this).text());//set the text in the search box
@@ -36,24 +36,27 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-	var w = $(window).innerWidth();
-    var h = $(window).innerHeight();
+	var sw = $(window).innerWidth();
+    var sh = $(window).innerHeight();
+    var r = function() { return Math.random(); }
 	$(".background").each(function(){
-		var tempSize = Math.random()*2.5;
-		var t = Math.random() * h*0.70;
-	    var r = Math.random() * w*0.70;
-	    var newBlur = w/50*tempSize;
-	    var newBlurStr = newBlur.toString() + "px";
-		$(this).rotate(Math.random()*360);
+		var tempSize = r()*2.5;
+		var pt = (r()*h*0.7).toString() + "px";
+	    var pr = (r()*w*0.7).toString() + "px";
+
+	    console.log(pt + " / " + pr)
+
+	    var newBlurStr = "blur(" + (sw/50*tempSize).toString() + "px)";
+	    var tempStr = (sw/8*tempSize).toString()+"px";
+
+		$(this).rotate(r()*360);
 	    $(this).css({
-	    	"top": t.toString()+"px",
-	    	"right": r.toString()+"px",
-	    	"position": "fixed",
-	    	"width": (w/8*tempSize).toString()+"px",
-	    	"height": (w/8*tempSize).toString()+"px",
-	    	"background-size": "100%, 100%",
-	    	"filter": "blur(" + newBlurStr + ")",
-	    	"-webkit-filter": "blur(" + newBlurStr + ")",
+	    	"top": pt,
+	    	"right": pr,
+	    	"width": tempStr,
+	    	"height": tempStr,
+	    	"filter": newBlurStr,
+	    	"-webkit-filter": newBlurStr,
 	    });
 	});
 });
