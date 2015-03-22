@@ -67,7 +67,7 @@ var getPuns = function(word, unsafe) {
 
 	// Do request
 	var req = new XMLHttpRequest();
-	req.open("GET", "http://localhost:4567/puns/" + word + "/unsafe", true);
+	req.open("GET", "http://localhost:4567/puns/" + word + (unsafe ? "/unsafe" : ""), true);
 	req.onload = function() {
 		var puns = JSON.parse(req.response)["result"];
 
@@ -77,12 +77,16 @@ var getPuns = function(word, unsafe) {
 		}
 
 		// Construct expandos
-		$(".pun").each(function() {
-			$(this).append("<div class='pun-expando'></div>");
-		});
 		$(".pun").on("click", function() {
-			$(".pun").removeClass("expanded");
+
+			// UI
+			$(".pun").not(this).removeClass("expanded");
+			$(".pun-domain").remove();
 			$(this).toggleClass("expanded");
+
+			// Domain request
+			if ($(this).hasClass("expanded"))
+				getDomains($(this).text());
 		});
 	};
 	req.send(null);
@@ -90,6 +94,22 @@ var getPuns = function(word, unsafe) {
 
 var getDomains = function(phrase) {
 
+	// Clean up phrase
+	phrase = phrase.toLowerCase().replace(/\W+/g, "");
+
+	// Do request
+	var req = new XMLHttpRequest();
+	req.open("GET", "http://localhost:4567/domains/" + phrase, true);
+	req.onload = function() {
+
+		// Add domains to expando blurb
+		var domains = JSON.parse(req.response)["result"];
+		console.log(domains)
+		for (var i = 0; i < domains.length; i++) {
+			$(".pun.expanded").append("<p class='pun-domain'>" + domains[i] + "</p>");
+		}
+	};
+	req.send(null);
 }
 
 var getAvailable = function(domain) {
