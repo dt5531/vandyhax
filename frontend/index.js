@@ -35,12 +35,12 @@ $(document).ready(function(){
 
 // Background images
 $(document).ready(function(){
-	var sw = $(window).innerWidth();
+    var sw = $(window).innerWidth();
     var sh = $(window).innerHeight();
     var r = function() { return Math.random(); }
 	$(".back-img").each(function(){
 		var img = $(this);
-		/* setInterval(function(){
+		setInterval(function(){
 			var tempSize = r()*2.5;
 			var pt = (r()*sh*0.7).toString() + "px";
 		    var pr = (r()*sw*0.7).toString() + "px";
@@ -57,7 +57,7 @@ $(document).ready(function(){
 		    $(img).css("-webkit-filter", newBlurStr);
 
 		    // Fade
-		}, 1000); */
+		}, 1000);
 	});
 });
 
