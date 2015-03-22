@@ -68,7 +68,7 @@ var getPuns = function(word, unsafe) {
 
 	// Do request
 	var req = new XMLHttpRequest();
-	req.open("GET", "http://www.dankna.me/puns/" + word + (unsafe ? "/unsafe" : ""), true);
+	req.open("GET", "http://dankna.me/puns/" + word + (unsafe ? "/unsafe" : ""), true);
 	req.onload = function() {
 		var puns = JSON.parse(req.response)["result"];
 
@@ -101,7 +101,7 @@ var getDomains = function(phrase) {
 
 	// Do request
 	var req = new XMLHttpRequest();
-	req.open("GET", "http://www.dankna.me/domains/" + phrase, true);
+	req.open("GET", "http://dankna.me/domains/" + phrase, true);
 	req.onload = function() {
 
 		// Check for available domains
