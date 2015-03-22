@@ -38,25 +38,36 @@ $(document).ready(function(){
 	var sw = $(window).innerWidth();
     var sh = $(window).innerHeight();
     var r = function() { return Math.random(); }
-	$(".background").each(function(){
-		var tempSize = r()*2.5;
-		var pt = (r()*h*0.7).toString() + "px";
-	    var pr = (r()*w*0.7).toString() + "px";
+	$(".back-img").each(function(){
 
-	    console.log(pt + " / " + pr)
+		// Initial stuff
+		var img = $(this);
 
-	    var newBlurStr = "blur(" + (sw/50*tempSize).toString() + "px)";
-	    var tempStr = (sw/8*tempSize).toString()+"px";
+		// Move images
+		/*setInterval(function(){
+			var tempSize = r()*2.5;
+			var newBlurStr = "blur(" + (sw/50*tempSize).toString() + "px)";
+			var pt = (r()*sh*0.7).toString() + "px";
+		    var pr = (r()*sw*0.7).toString() + "px";
+		    var tempStr = (sw/8*tempSize).toString()+"px";
 
-		$(this).rotate(r()*360);
-	    $(this).css({
-	    	"top": pt,
-	    	"right": pr,
-	    	"width": tempStr,
-	    	"height": tempStr,
-	    	"filter": newBlurStr,
-	    	"-webkit-filter": newBlurStr
-	    });
+		    // Fade out
+		    $(img).fadeOut("slow", function(){
+
+				// Move
+			    $(img).css("top", pt);
+			    $(img).css("right", pr);
+
+			    // Resize
+			    $(img).css("width", tempStr);
+			    $(img).css("height", tempStr);
+				$(img).css("filter", newBlurStr);
+				$(img).css("-webkit-filter", newBlurStr);
+
+			    // Fade in
+			    $(img).fadeIn("slow");
+			});
+		}, 1000); */
 	});
 });
 
