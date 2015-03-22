@@ -40,7 +40,7 @@ $(document).ready(function(){
     var r = function() { return Math.random(); }
 	$(".back-img").each(function(){
 		var img = $(this);
-		setInterval(function(){
+		/* setInterval(function(){
 			var tempSize = r()*2.5;
 			var pt = (r()*sh*0.7).toString() + "px";
 		    var pr = (r()*sw*0.7).toString() + "px";
@@ -57,7 +57,7 @@ $(document).ready(function(){
 		    $(img).css("-webkit-filter", newBlurStr);
 
 		    // Fade
-		}, 1000);
+		}, 1000); */
 	});
 });
 
@@ -108,6 +108,7 @@ var getDomains = function(phrase) {
 		// Check for available domains
 		var domains = JSON.parse(req.response)["result"];
 		var domain;
+		$(".pun.expanded").empty();
 		for (var i = 0; i < domains.length; i++) {
 			ncDomain = domains[i].replace(/\/.+/g, "");
 			$(".pun.expanded").append(
