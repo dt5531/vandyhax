@@ -65,8 +65,18 @@ h5 {
   min-height: 50px;
 }
 
-.pun-domain {
-  color: #33C3F0;
+.pun-domain,
+.pun-error,
+.pun-busy {
   font-size: 15px;
   margin-bottom: 0px;
+}
+
+.pun-domain {
+  color: #33C3F0;
+}
+
+.pun-error,
+.pun-busy {
+  color: red;
 }
