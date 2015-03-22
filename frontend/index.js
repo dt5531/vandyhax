@@ -39,35 +39,25 @@ $(document).ready(function(){
     var sh = $(window).innerHeight();
     var r = function() { return Math.random(); }
 	$(".back-img").each(function(){
-
-		// Initial stuff
 		var img = $(this);
-
-		// Move images
-		/*setInterval(function(){
+		setInterval(function(){
 			var tempSize = r()*2.5;
-			var newBlurStr = "blur(" + (sw/50*tempSize).toString() + "px)";
 			var pt = (r()*sh*0.7).toString() + "px";
 		    var pr = (r()*sw*0.7).toString() + "px";
+
+			var newBlurStr = "blur(" + (sw/70*tempSize).toString() + "px)";		    
 		    var tempStr = (sw/8*tempSize).toString()+"px";
 
-		    // Fade out
-		    $(img).fadeOut("slow", function(){
+			// Move
+		    $(img).css("top", pt);
+		    $(img).css("right", pr);
+		    $(img).css("width", tempStr);
+		    $(img).css("height", tempStr);
+		    $(img).css("filter", newBlurStr);
+		    $(img).css("-webkit-filter", newBlurStr);
 
-				// Move
-			    $(img).css("top", pt);
-			    $(img).css("right", pr);
-
-			    // Resize
-			    $(img).css("width", tempStr);
-			    $(img).css("height", tempStr);
-				$(img).css("filter", newBlurStr);
-				$(img).css("-webkit-filter", newBlurStr);
-
-			    // Fade in
-			    $(img).fadeIn("slow");
-			});
-		}, 1000); */
+		    // Fade
+		}, 1000);
 	});
 });
 
