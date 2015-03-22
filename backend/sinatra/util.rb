@@ -27,7 +27,8 @@ def find_unused(phrase)
 end
 
 def pungen(phrase, profane="")
-  phrases = %x[/usr/bin/env python ../pungen_make_pun.py "#{Shellwords.escape(phrase)}" #{profane}].split(/\n/).map {|s|
+  pungenbin = File.expand_path('../../pungen_make_pun.py', __FILE__)
+  phrases = %x[/usr/bin/env python #{pungenbin} "#{Shellwords.escape(phrase)}" #{profane}].split(/\n/).map {|s|
     s.strip.gsub(/^\[[^\]]*\]\s*/, '')
   }
   if profane != ""
