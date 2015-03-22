@@ -59,7 +59,7 @@ $(document).ready(function(){
 	});
 });
 
-// AJAX queries
+// Pun query
 var getPuns = function(word, unsafe) {
 
 	// Hide old puns
@@ -67,7 +67,7 @@ var getPuns = function(word, unsafe) {
 
 	// Do request
 	var req = new XMLHttpRequest();
-	req.open("GET", "http://localhost:4567/puns/" + word + (unsafe ? "/unsafe" : ""), true);
+	req.open("GET", "http://www.dankna.me/puns/" + word + (unsafe ? "/unsafe" : ""), true);
 	req.onload = function() {
 		var puns = JSON.parse(req.response)["result"];
 
@@ -92,6 +92,7 @@ var getPuns = function(word, unsafe) {
 	req.send(null);
 }
 
+// Domain query
 var getDomains = function(phrase) {
 
 	// Clean up phrase
@@ -99,32 +100,37 @@ var getDomains = function(phrase) {
 
 	// Do request
 	var req = new XMLHttpRequest();
-	req.open("GET", "http://localhost:4567/domains/" + phrase, true);
+	req.open("GET", "http://www.dankna.me/domains/" + phrase, true);
 	req.onload = function() {
 
 		// Check for available domains
 		var domains = JSON.parse(req.response)["result"];
-		console.log(domains)
+		var domain;
 		for (var i = 0; i < domains.length; i++) {
-			getAvailable(domains[i], $(".pun.expanded"));
+			ncDomain = domains[i].replace(/\/.+/g, "");
+			$(".pun.expanded").append(
+				"<p class='pun-domain'>" +
+					"<a href='http://namecheap.com/domains/registration/results.aspx?domain=" + 
+						ncDomain +
+					"'>" + domains[i] + "</a>" +
+				"</p>");
 		}
+		if (domains.length === 0) {
+			$(".pun.expanded").append("<p class='pun-error'>No domains available.</p>");
+		}
+		$(".pun-busy").remove()
 	};
+	$(".pun.expanded").append("<p class='pun-busy'>Querying...</p>")
 	req.send(null);
 }
 
-// Check whether a domain is available
-var getAvailable = function(domain, root) {
-
-	// Do request
-	var req = new XMLHttpRequest();
-	req.open("GET", "http://localhost:4567/whois/" + domain, true);
-	req.onload = function() {
-
-		// Check for available domains
-		var res = req.response;
-		console.log(res)
-	};
-	req.send(null);
-
-	//root.append("<p class='pun-domain'>" + domains[i] + "</p>");
-}
+// Typeahead ("manual") queries
+var typeaheadTimer;
+$(document).ready(function(){
+	$("#search").on("keydown", function(){
+		clearTimeout(typeaheadTimer);
+		typeaheadTimer = setTimeout(function(){
+			getPuns($("#search").val(), false);
+		}, 400);
+	});
+});
