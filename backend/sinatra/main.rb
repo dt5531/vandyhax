@@ -16,9 +16,9 @@ def get_pun(phrase, unfiltered=false)
   puns
 end
 
-options '/*' do
-  #response["Access-Control-Allow-Headers"] = "origin, x-requested-with, content-type"
-  response["Access-Control-Allow-Origin"] = "*"
+before do
+  headers 'Access-Control-Allow-Origin' => '*',
+    'Access-Control-Allow-Methods' => ['OPTIONS', 'GET', 'POST']
 end
 
 get '/whois/:name' do |name|
